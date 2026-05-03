@@ -1,0 +1,112 @@
+# #!/usr/bin/env pybricks-micropython
+# from pybricks.hubs import EV3Brick
+# from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+#                                  InfraredSensor, UltrasonicSensor, GyroSensor)
+# from pybricks.parameters import Port, Stop, Direction, Button, Color
+# from pybricks.tools import wait, StopWatch, DataLog
+# from pybricks.robotics import DriveBase
+# from pybricks.media.ev3dev import SoundFile, ImageFile
+
+
+# # This program requires LEGO EV3 MicroPython v2.0 or higher.
+# # Click "Open user guide" on the EV3 extension tab for more information.
+
+
+# # Create your objects here.
+# ev3 = EV3Brick()
+# gyro_sensor = GyroSensor(Port.S1)
+# csensor = ColorSensor(Port.S2)
+# motor_right = Motor(Port.A) # positiive - clockwise, negative- counter clockwise
+# motor_left = Motor(Port.B)
+
+
+# # Write your program here.
+# ev3.speaker.beep()
+
+# SPEED = 900
+# TURN_SPEED = 700
+# DARK_THRESHOLD = 7
+# TURN_ANGLE = 180
+# WHEEL_DIAMETER = 56   # TODO measure your wheel diameter in mm
+# AXLE_TRACK = 120      # TODO measure distance between wheel centers in mm
+
+
+# # TODO Test the color sensor readings
+# # while True:
+# #     print(csensor.reflection())
+# #     wait(200)
+
+
+# gyro_sensor.reset_angle(0)
+
+# # Drive forward until dark finish line
+# while True:
+#     angle = gyro_sensor.angle()
+
+#     # simple gyro correction
+#     correction = angle * 5
+
+#     motor_left.run(SPEED - correction)
+#     motor_right.run(SPEED + correction)
+
+#     brightness = csensor.reflection()
+
+#     if brightness < DARK_THRESHOLD:
+#         motor_left.stop()
+#         motor_right.stop()
+#         break
+
+#     wait(10)
+
+# # Turn around 180 degrees
+# gyro_sensor.reset_angle(0)
+
+# # while abs(gyro_sensor.angle()) < TURN_ANGLE - 5:
+# #     motor_left.run(TURN_SPEED)
+# #     motor_right.run(-TURN_SPEED)
+# #     wait(10)
+
+# # Turn around 180 degrees using wheel/axle calculation
+# motor_degrees = TURN_ANGLE * AXLE_TRACK / WHEEL_DIAMETER
+
+# motor_left.run_angle(TURN_SPEED, motor_degrees, wait=False)
+# motor_right.run_angle(TURN_SPEED, -motor_degrees, wait=True)
+
+# motor_left.stop()
+# motor_right.stop()
+# wait(200)
+
+
+# # Move away from the finish line before searching for the start line
+# while csensor.reflection() < DARK_THRESHOLD:
+#     motor_left.run(SPEED)
+#     motor_right.run(SPEED)
+#     wait(10)
+
+# motor_left.stop()
+# motor_right.stop()
+# wait(100)
+
+
+# # Drive back to starting line
+# gyro_sensor.reset_angle(0)
+
+# while True:
+#     angle = gyro_sensor.angle()
+#     correction = angle * 5
+
+#     motor_left.run(SPEED - correction)
+#     motor_right.run(SPEED + correction)
+
+#     brightness = csensor.reflection()
+
+#     if brightness < DARK_THRESHOLD:
+#         motor_left.stop()
+#         motor_right.stop()
+#         break
+
+#     wait(10)
+
+# ev3.speaker.beep()
+
+
