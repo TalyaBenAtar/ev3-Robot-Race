@@ -26,19 +26,21 @@ motor_left = Motor(Port.B)
 
 # Parameters:
 
-SPEED = 900
+SPEED = 1200
 TURN_SPEED = 700
-DARK_THRESHOLD = 15
+DARK_THRESHOLD = 4
 
 TURN_ANGLE = 180
-WHEEL_DIAMETER = 56   # TODO measure your wheel diameter in mm
-AXLE_TRACK = 120      # TODO measure distance between wheel centers in mm
+WHEEL_DIAMETER = 53   # TODO measure the wheel diameter in mm
+AXLE_TRACK = 191      # TODO measure distance between wheel centers in mm
 
-# TODO If the robot "snakes" or wobbles violently, lower that factor to 1 or 2. If the robot drifts too much to one side, increase that factor to 10 or 20.
-CORRECTION_FACTOR = 5 
+# TODO If the robot "snakes" or wobbles violently, lower that factor to 1 or 2. 
+# If the robot drifts too much to one side, increase that factor to 10 or 20.
+CORRECTION_FACTOR = 0.5
     
-# TODO If the robot gets stuck on the line, increase the max_distance to 300 or 400. If the robot goes too far after leaving the line, decrease that value to 100 or 150.
-LEAVE_LINE_MAX_DISTANCE = 200 # maximum distance in degrees of wheel rotation
+# TODO If the robot gets stuck on the line, increase the max_distance to 300 or 400. 
+# If the robot goes too far after leaving the line, decrease that value to 100 or 150.
+LEAVE_LINE_MAX_DISTANCE = 400 # maximum distance in degrees of wheel rotation
 MAX_CORRECTION = 200
 
 
@@ -67,9 +69,10 @@ def drive_until_dark_line():
         correction = angle * CORRECTION_FACTOR
         correction = max(min(correction, MAX_CORRECTION), -MAX_CORRECTION)  # limit the correction to the maximum value
 
-        motor_left.run(SPEED - correction)
-        motor_right.run(SPEED + correction)
+        motor_left.run(-SPEED + correction)
+        motor_right.run(-SPEED - correction)
 
+        # darkness goes from 0 (black) to 100 (white), so we check if it's below the threshold to detect the dark line
         if csensor.reflection() < DARK_THRESHOLD:
             stop_motors()
             break
@@ -81,8 +84,8 @@ def drive_until_dark_line():
 def turn_around_180():
     motor_degrees = TURN_ANGLE * AXLE_TRACK / WHEEL_DIAMETER
 
-    motor_left.run_angle(TURN_SPEED, motor_degrees, wait=False)
-    motor_right.run_angle(TURN_SPEED, -motor_degrees, wait=True)
+    motor_left.run_angle(-TURN_SPEED, motor_degrees, wait=False)
+    motor_right.run_angle(-TURN_SPEED, -motor_degrees, wait=True)
 
     stop_motors()
     wait(200)
@@ -107,9 +110,9 @@ def leave_dark_line():
     motor_right.reset_angle(0)
 
     # Move forward until we are off the dark line, allowing a maximum distance of 200 degrees of wheel rotation to prevent getting stuck or going too far
-    while (csensor.reflection() < DARK_THRESHOLD and (abs(motor_left.angle()) + abs(motor_right.angle())) / 2 < LEAVE_LINE_MAX_DISTANCE):
-        motor_left.run(SPEED)
-        motor_right.run(SPEED)
+    while (csensor.reflection() < DARK_THRESHOLD or (abs(motor_left.angle()) + abs(motor_right.angle())) / 2 < LEAVE_LINE_MAX_DISTANCE):
+        motor_left.run(-SPEED)
+        motor_right.run(-SPEED)
         wait(10)
 
     stop_motors()
