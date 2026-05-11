@@ -106,11 +106,11 @@ Add pictures and videos of the robot here after uploading them to GitHub.
   <tr>
     <td align="center">
       <img width="3468" height="4624" alt="EV3_robot-race_pic1" src="https://github.com/user-attachments/assets/f2184ad6-8002-4552-b226-90d1832e7ca6" />
-      <b>Front View</b>
+      <b>Side View</b>
     </td>
     <td align="center">
       <img width="3468" height="4624" alt="EV3_robot-race_pic2" src="https://github.com/user-attachments/assets/5a284c10-e1e5-42de-9d17-895c4c13129c" />
-      <b>Side View</b>
+      <b>Front View</b>
     </td>
   </tr>
 </table>
@@ -119,7 +119,7 @@ Add pictures and videos of the robot here after uploading them to GitHub.
 ### Demo Video
 
 ```md
-[Watch the robot demo](YOUR_VIDEO_LINK_HERE)
+https://github.com/user-attachments/assets/617a559a-e9a8-4554-8269-d7ce15fdad57
 ```
 
 ---
