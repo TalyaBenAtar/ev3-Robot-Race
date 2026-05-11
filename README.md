@@ -98,8 +98,6 @@ Port.B
 
 ## 📸 Robot Media
 
-Add pictures and videos of the robot here after uploading them to GitHub.
-
 ### Robot Pictures
 
 <table>
