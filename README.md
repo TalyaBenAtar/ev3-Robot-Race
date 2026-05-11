@@ -11,7 +11,7 @@ The robot drives forward while using a **gyro sensor** to keep itself straight.
 When it detects a dark line using the **color sensor**, it stops, turns around, moves away from the line, and searches for the line again from the other direction.
 
 In simple words:  
-the robot drives to a finish line, turns around, and comes back. Tiny robot taxi behavior. Very official.
+the robot drives to a finish line, turns around, and comes back.
 
 ---
 
